@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="3rdparty/normalize.css" />
+    <link rel="stylesheet" href="3rdparty/skeleton.css" />
+    <style>
+
+    body {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        color: #222;
+        background-color: white;
+    }
+
+    #bodywrap {
+        display: table;
+        width: 100%;
+        height: 100%;
+    }
+
+    #container {
+        display: table-row;
+        height: 100%;
+    }
+
+    #credits {
+        display: table-row;
+    }
+
+    #input, #rightpane {
+        position: relative;
+        overflow: scroll;
+        font-family: sans-serif;
+    }
+
+    #input .wrap, #rightpane .wrap {
+        display: table;
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        height: 100%;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    #input .editor-wrap, #rightpane #output {
+        /*display: table-row;*/ /* doesn't work. Why???? */
+        height: 100%;
+    }
+
+    #input .editor {
+        margin: 1em;
+        width: calc(100% - 2em);
+        height: calc(100% - 2em);
+        font-family: monospace;
+        font-size: inherit;
+    }
+
+    #input #formwrap, #rightpane .buttons {
+        display: table-row;
+        height: 0;
+    }
+
+    #input #formwrap > div {
+        margin: 0 1em;
+    }
+
+    #container .gutter, #input, #rightpane {
+        float: left;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    #output {
+        background-color: gray;
+        overflow: scroll;
+        font-size: 1rem;
+    }
+
+    #container .gutter {
+        cursor: ew-resize;
+        background-image:  url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+
+    #rightpane .buttons input {
+        margin-top: 1rem;
+        margin-right: 1rem;
+    }
+
+    #credits {
+        color: #666;
+        font-size: small;
+        text-align: center;
+    }
+    </style>
+</head>
+<body>
+<div id="bodywrap">
+<div id="container">
+    <div id="input"><div class="wrap">
+        <div class="editor-wrap">
+            <textarea class='editor' contenteditable='true'></textarea>
+        </div>
+        <div id="formwrap">
+            <div class="row">
+                <div class="six columns">
+                    <label for="renderer">Renderer: </label>
+                    <select id="renderer" class="u-full-width">
+                        <option value="classic" selected="selected">Classic (4:3)</option>
+                        <option value="kuemmel">Kümmerlin (4:3)</option>
+                    </select>
+                </div>
+                <div class="six columns">
+                    <label for="colorscheme">Color Scheme: </label>
+                    <select id="colorscheme" class="u-full-width">
+                        <option value="classic" selected="selected">Classic Dark</option>
+                        <option value="kuemmel">Refined Dark</option>
+                        <option value="light">Light</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div></div>
+    <div id="rightpane"><div class="wrap">
+        <div id="output">
+            <div><!-- dummy --></div>
+        </div>
+        <div class="buttons">
+            <input type="button" id="txtbutton" value="Download Text" />
+            <input type="button" class="button-primary" id="pptxbutton" value="Donwload PPTX" />
+            <div class="u-pull-right">
+                Zoom:
+                <input type="button" id="zoominbtn" value="+" />
+                <input type="button" id="zoomoutbtn" value="-" />
+            </div>
+        </div>
+    </div></div>
+
+</div>
+<div id="credits">
+    <a href="#TODO" target="_blank" rel="noopener">SongPPTGen</a> Copyright (C) 2017 Jonas Kümmerlin
+    -
+    Built with <a href="http://requirejs.org" target="_blank" rel="noopener">RequireJS</a>,
+        <a href="http://getskeleton.com/" target="_blank" rel="noopener">Skeleton</a>,
+        <a href="https://stuk.github.io/jszip/" target="_blank" rel="noopener">JSZip</a>,
+        <a href="https://github.com/eligrey/FileSaver.js/" target="_blank" rel="noopener">FileSaver.JS</a>,
+        and code based on <a href="https://github.com/gitbrent/PptxGenJS" target="_blank" rel="noopener">PptxGenJS</a>
+</div>
+<script src="3rdparty/split.js"></script>
+<script data-main="index" src="3rdparty/require.js"></script>
+
+</div>
+</body>
+</html>

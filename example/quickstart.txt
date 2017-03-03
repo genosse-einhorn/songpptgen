@@ -1,0 +1,31 @@
+Quick Start Guide
+
+The first line is the title.
+After a blank line, the lyrics start.
+If you want it easy,
+just type in the lyrics
+make line breaks
+--
+And use two dashes
+when you want to switch a slide
+
+--
+
+Around delimiters, you can insert
+blank lines freely,
+    even indentation will be trimmed.
+
+Verse 2
+As an alternative to the -- markers,
+you can start your
+Paragraph with certain signal words,
+currently recognized are
+"Verse", "Chorus" and "Bridge"
+
+Chorus
+See the extended documentation
+for more syntax details.
+
+Copyright (C) 2017 Jonas Kümmerlin <rgcjonas@gmail.com>
+A paragraph that starts with "Copyright" will automatically
+be detected as copyright statement.
