@@ -18,17 +18,34 @@ define(['lib/parser', 'lib/renderer/html', 'lib/util/urlparams', 'domReady!'],
         });
     }
 
-
     function render() {
         require(['lib/layout/' + renderer.value], function(layouter) {
-            output.replaceChild(renderer_html(layouter(parser.parse(textarea.value)), 'DARK_CLASSIC'), output.firstChild);
+            output.replaceChild(renderer_html(layouter(parser.parse(textarea.value)), colorscheme.value), output.firstChild);
         });
+    }
+
+    function fixFilename(unsafe) {
+        unsafe = '' + unsafe;
+        if (unsafe.length < 1)
+            return '_unknown_';
+
+        // very conservative attempt at sanitizing a file name
+        return unsafe.split('').map(c => {
+            let u = c.charCodeAt(0);
+            if (u <= 31)
+                return ' ';
+            if ('<>:"\'/\\|?*'.indexOf(c) != -1)
+                return '_';
+
+            return c;
+        }).join('');
     }
 
     function pptx() {
         require(['lib/layout/' + renderer.value, 'lib/renderer/powerpoint', '3rdparty/FileSaver'], function(layouter, renderer, saveAs) {
-            renderer(layouter(parser.parse(textarea.value)), 'DARK_CLASSIC')
-            .generateAsync({type: 'blob'}).then(function(content) { window.saveAs(content, 'TODO.pptx') });
+            let song = parser.parse(textarea.value);
+            renderer(layouter(song), colorscheme.value)
+            .generateAsync({type: 'blob'}).then(function(content) { window.saveAs(content, fixFilename(song.title) + '.pptx') });
         });
     }
 
@@ -40,6 +57,7 @@ define(['lib/parser', 'lib/renderer/html', 'lib/util/urlparams', 'domReady!'],
 
     textarea.addEventListener('input', render);
     renderer.addEventListener('input', render);
+    colorscheme.addEventListener('input', render);
     document.querySelector('#pptxbutton').addEventListener('click', pptx);
     document.querySelector('#zoominbtn').addEventListener('click', () => zoom(0.1));
     document.querySelector('#zoomoutbtn').addEventListener('click', () => zoom(-0.1));
