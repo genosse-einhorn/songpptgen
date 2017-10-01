@@ -7,56 +7,64 @@
     <link rel="stylesheet" href="3rdparty/skeleton.css" />
     <style>
 
+    /* general two-column layout */
     body {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
         color: #222;
         background-color: white;
         overflow: hidden;
     }
 
-    #container {
-        display: block;
+    #bodywrap {
         position: absolute;
-        left: 0;
         top: 0;
-        bottom: 1em;
-        right: 0;
-    }
-
-    #credits {
-        display: block;
-        position: absolute;
         left: 0;
         right: 0;
         bottom: 0;
-        height: 1.5em;
-        padding: 0;
+        display: flex;
+        flex-flow: column;
+    }
+
+    #container {
+        flex: 1 1 auto;
+        position: relative;
+    }
+
+    #containerwrap {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    #credits {
+        flex: 0 1 auto;
     }
 
     #input, #rightpane {
         position: relative;
-        font-family: sans-serif;
     }
 
-    #input .wrap, #rightpane .wrap {
-        display: table;
+    #container .gutter, #input, #rightpane {
+        float: left;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    /* left column editor layout */
+    #input .wrap {
+        display: flex;
+        flex-flow: column;
         position: absolute;
         left: 0;
         top: 0;
         right: 0;
         bottom: 0;
-        height: 100%;
-        width: 100%;
-        table-layout: fixed;
     }
 
-    #input .editor-wrap, #rightpane #output {
-        /*display: table-row;*/ /* doesn't work. Why???? */
-        height: 100%;
+    #input .editor-wrap {
+        flex: 1 1 auto;
+        height: 0;
     }
 
     #input .editor {
@@ -67,25 +75,34 @@
         font-size: inherit;
     }
 
-    #input #formwrap, #rightpane .buttons {
-        display: table-row;
-        height: 0;
+    #input #formwrap {
+        flex: 0 1 auto;
     }
 
     #input #formwrap > div {
         margin: 0 1em;
     }
 
-    #container .gutter, #input, #rightpane {
-        float: left;
-        height: 100%;
-        overflow: hidden;
+    /* layout in right pane */
+    #rightpane .wrap {
+        display: flex;
+        flex-flow: column;
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
     }
 
     #output {
         background-color: gray;
         overflow: scroll;
         font-size: 1rem;
+        flex: 1 1 auto;
+    }
+
+    #rightpane .buttons {
+        flex: 0 1 auto;
     }
 
     #container .gutter {
@@ -109,7 +126,7 @@
 </head>
 <body>
 <div id="bodywrap">
-<div id="container">
+<div id="container"><div id="containerwrap">
     <div id="input"><div class="wrap">
         <div class="editor-wrap">
             <textarea class='editor' contenteditable='true'></textarea>
@@ -149,7 +166,7 @@
         </div>
     </div></div>
 
-</div>
+</div></div>
 <div id="credits">
     <a href="#TODO" target="_blank" rel="noopener">SongPPTGen</a> Copyright (C) 2017 Jonas Kümmerlin
     -
