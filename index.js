@@ -4,7 +4,7 @@ require.config({
         'domReady': '3rdparty/require_domReady'
     }
 });
-define(['lib/parser', 'lib/renderer/html', 'lib/util/urlparams', 'domReady!'],
+define(['lib/parser', 'lib/renderer/svg', 'lib/util/urlparams', 'domReady!'],
        function(parser, renderer_html, urlparams) {
     let textarea = document.querySelector('#input .editor');
     let renderer = document.querySelector('#renderer');
