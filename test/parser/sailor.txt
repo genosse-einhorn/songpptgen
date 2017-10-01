@@ -34,4 +34,6 @@ What shall we do with a drunken soldier?
 What shall we do with a drunken soldier?
 Early in the morning?
 
+.order 1,r,2,r,3,r,b,r
+
 Copyright: Unknown.

@@ -7,5 +7,15 @@
         "Vers 3": "Put him in the long-boat and make him bail her,\nPut him in the long-boat and make him bail her.\nPut him in the long-boat and make him bail her,\nEarly in the morning",
         "Bridge": "What shall we do with a drunken soldier?\nWhat shall we do with a drunken soldier?\nWhat shall we do with a drunken soldier?\nEarly in the morning?"
     },
+    "order": [
+        "Verse 1",
+        "Refrain",
+        "Strophe 2",
+        "Refrain",
+        "Vers 3",
+        "Refrain",
+        "Bridge",
+        "Refrain"
+    ],
     "copyright": "Copyright: Unknown."
 }

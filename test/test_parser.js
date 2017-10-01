@@ -12,8 +12,16 @@ describe('Parser', function() {
             let json = txt.replace('.txt', '.json');
 
             it('should handle ' + f, function() {
-                assert.deepEqual(parser.parse(fs.readFileSync(txt, 'utf-8')),
-                            JSON.parse(fs.readFileSync(json, 'utf-8')));
+                let parsed = parser.validateOrder(parser.parse(fs.readFileSync(txt, 'utf-8')));
+
+                // only check some properties
+                for (let i in parsed) {
+                    if (['title', 'copyright', 'parts', 'order'].indexOf(i) == -1) {
+                        delete parsed[i];
+                    }
+                }
+
+                assert.deepEqual(parsed, JSON.parse(fs.readFileSync(json, 'utf-8')));
             });
         }
     }
