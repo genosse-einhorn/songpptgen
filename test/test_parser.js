@@ -16,7 +16,7 @@ describe('Parser', function() {
 
                 // only check some properties
                 for (let i in parsed) {
-                    if (['title', 'copyright', 'parts', 'order'].indexOf(i) == -1) {
+                    if (['title', 'copyright', 'verses', 'order'].indexOf(i) == -1) {
                         delete parsed[i];
                     }
                 }

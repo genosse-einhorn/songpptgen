@@ -1,11 +1,11 @@
 {
     "title": "Drunken Sailor",
-    "parts": {
-        "Refrain": "Weigh heigh and up she rises\nWeigh heigh and up she rises\nWeigh heigh and up she rises\nEarly in the morning",
-        "Verse 1": "What shall we do with a drunken sailor,\nWhat shall we do with a drunken sailor,\nWhat shall we do with a drunken sailor,\nEarly in the morning?",
-        "Strophe 2": "Put/chuck him in the long boat 'til he's sober,\nPut/chuck him in the long boat 'til he's sober,\nPut/chuck him in the long boat 'til he's sober,\nEarly in the morning",
-        "Vers 3": "Put him in the long-boat and make him bail her,\nPut him in the long-boat and make him bail her.\nPut him in the long-boat and make him bail her,\nEarly in the morning",
-        "Bridge": "What shall we do with a drunken soldier?\nWhat shall we do with a drunken soldier?\nWhat shall we do with a drunken soldier?\nEarly in the morning?"
+    "verses": {
+        "Refrain": ["Weigh heigh and up she rises\nWeigh heigh and up she rises\nWeigh heigh and up she rises\nEarly in the morning"],
+        "Verse 1": ["What shall we do with a drunken sailor,\nWhat shall we do with a drunken sailor,\nWhat shall we do with a drunken sailor,\nEarly in the morning?"],
+        "Strophe 2": ["Put/chuck him in the long boat 'til he's sober,\nPut/chuck him in the long boat 'til he's sober,\nPut/chuck him in the long boat 'til he's sober,\nEarly in the morning"],
+        "Vers 3": ["Put him in the long-boat and make him bail her,\nPut him in the long-boat and make him bail her.\nPut him in the long-boat and make him bail her,\nEarly in the morning"],
+        "Bridge": ["What shall we do with a drunken soldier?\nWhat shall we do with a drunken soldier?\nWhat shall we do with a drunken soldier?\nEarly in the morning?"]
     },
     "order": [
         "Verse 1",

@@ -1,12 +1,12 @@
 {
     "title": "297e Amazing grace! How sweet the sound",
-    "parts": {
-        "1": "Amazing grace! How sweet the sound\nthat saved a wretch like me!\nI once was lost, but now am found;\nwas blind, but now I see.",
-        "2": "'t was grace that taught my heart to fear,\nand grace my fears relieved;\nhow precious did that grace appear\nthe hour I first believed.",
-        "3": "Through many dangers, toils, and snares,\nI have already come;\n'tis grace hath brought me safe thus far,\nand grace will lead me home.",
-        "4": "The Lord has promised good to me,\nhis word my hope secures;\nhe will my shield and portion be,\nas long as life endures.",
-        "5": "Yea, when this flesh and heart shall fail,\nand mortal life shall cease,\nI shall possess, within the veil,\na life of joy and peace.",
-        "6": "When we've been there ten thousand years,\nbright shining as the sun,\nwe've no less days to sing God's praise\nthan when we'd first begun."
+    "verses": {
+        "1": ["Amazing grace! How sweet the sound\nthat saved a wretch like me!\nI once was lost, but now am found;\nwas blind, but now I see."],
+        "2": ["'t was grace that taught my heart to fear,\nand grace my fears relieved;\nhow precious did that grace appear\nthe hour I first believed."],
+        "3": ["Through many dangers, toils, and snares,\nI have already come;\n'tis grace hath brought me safe thus far,\nand grace will lead me home."],
+        "4": ["The Lord has promised good to me,\nhis word my hope secures;\nhe will my shield and portion be,\nas long as life endures."],
+        "5": ["Yea, when this flesh and heart shall fail,\nand mortal life shall cease,\nI shall possess, within the veil,\na life of joy and peace."],
+        "6": ["When we've been there ten thousand years,\nbright shining as the sun,\nwe've no less days to sing God's praise\nthan when we'd first begun."]
     },
     "order": ["1","2","3","4","5","6"],
     "copyright": "T: John Newton 1779 (Str. 1-5); Herkunft unbekannt vor 1790 (Str. 6)\nM: Amerikanische Volksweise 19. Jh. / \"Columbian Harmony\" 1829\nS: Edwin Othello Excell 1900"
