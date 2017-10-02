@@ -70,8 +70,8 @@ define(['lib/parser', 'lib/util/urlparams', 'lib/h', 'lib/renderer/colorscheme',
             let song = parser.parse(textarea.value);
             let layout = layouter(song);
 
-            let csswidth = layout.pagewidth/100 + 'in';
-            let cssheight = layout.pageheight/100 + 'in';
+            let csswidth = layout.pagewidth + 'pt';
+            let cssheight = layout.pageheight + 'pt';
 
             let win = window.open('about:blank');
             win.document.write('<title>' + song.title + '</title>');
