@@ -70,17 +70,6 @@ define(['lib/parser', 'lib/util/urlparams', 'lib/h', 'lib/renderer/colorscheme',
         });
     }
 
-    function exportHandler() {
-        let m = document.querySelector('#export').value;
-
-        if (m == 'pptx')
-            pptx();
-        if (m == 'print')
-            print();
-
-        document.querySelector('#export').value = 'SELECT';
-    }
-
     function zoom(diff) {
         let f = output.style.fontSize ? parseFloat(output.style.fontSize.replace('rem', '')) : 1;
         f = Math.max(0.6, Math.min(100, f + diff));
@@ -90,7 +79,8 @@ define(['lib/parser', 'lib/util/urlparams', 'lib/h', 'lib/renderer/colorscheme',
     textarea.addEventListener('input', render);
     renderer.addEventListener('input', render);
     colorscheme.addEventListener('input', render);
-    document.querySelector('#export').addEventListener('change', exportHandler);
+    document.querySelector('#pptxbtn').addEventListener('click', pptx);
+    document.querySelector('#printbtn').addEventListener('click', print);
     document.querySelector('#presentbtn').addEventListener('click', present);
     document.querySelector('#zoominbtn').addEventListener('click', () => zoom(0.1));
     document.querySelector('#zoomoutbtn').addEventListener('click', () => zoom(-0.1));

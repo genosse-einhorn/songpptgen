@@ -40,14 +40,12 @@
         </div>
         <div class="buttons">
             <div class="u-pull-left">
-                Export:
-                <select id="export">
-                    <option selected value="SELECT">...</option>
-                    <option value="text">Text File</option>
-                    <option value="pptx">PowerPoint PPTX</option>
-                    <option value="print">Print (Chrome only)</option>
-                </select>
-                <input type="button" id="presentbtn" value="Show" />
+                <input type="button" class="button-primary" id="presentbtn" value="Present"
+                    title="Show slides in full screen mode" />
+                <input type="button" id="pptxbtn" value="PPTX"
+                    title="Export as PowerPoint PPTX file" />
+                <input type="button" id="printbtn" value="Print"
+                    title="Print slides (e.g. to PDF). Only works right in Chrome." />
             </div>
             <div class="u-pull-right">
                 Zoom:
