@@ -4,8 +4,9 @@ require.config({
         'domReady': '3rdparty/require_domReady'
     }
 });
-define(['lib/parser', 'lib/util/urlparams', 'lib/h', 'lib/renderer/colorscheme', 'domReady!'],
-       function(parser, urlparams, h, colorRepo) {
+define(['lib/parser', 'lib/util/urlparams', 'lib/h', 'lib/renderer/colorscheme',
+        '3rdparty/split', 'domReady!'],
+       function(parser, urlparams, h, colorRepo, Split) {
     let textarea = document.querySelector('#input .editor');
     let renderer = document.querySelector('#renderer');
     let colorscheme = document.querySelector('#colorscheme');
