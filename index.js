@@ -110,7 +110,7 @@ define(['lib/parser', 'lib/util/urlparams', 'lib/h', 'lib/renderer/colorscheme',
             }
 
             win.print();
-            //win.close();
+            win.close();
         });
     }
 
