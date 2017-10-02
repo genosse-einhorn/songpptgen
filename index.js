@@ -5,12 +5,19 @@ require.config({
     }
 });
 define(['lib/parser', 'lib/util/urlparams', 'lib/h', 'lib/renderer/colorscheme',
-        '3rdparty/split', 'domReady!'],
-       function(parser, urlparams, h, colorRepo, Split) {
+        '3rdparty/split', 'lib/output/present', 'lib/layout/classic', 'lib/layout/kuemmel',
+        'lib/renderer/svg', 'domReady!'],
+       function(parser, urlparams, h, colorRepo, Split, output_present,
+                layout_classic, layout_kuemmel, rendererSvg) {
     let textarea = document.querySelector('#input .editor');
     let renderer = document.querySelector('#renderer');
     let colorscheme = document.querySelector('#colorscheme');
     let output = document.querySelector('#output');
+
+    let layouters = {
+        'classic': layout_classic,
+        'kuemmel': layout_kuemmel
+    };
 
     function loadExample(example) {
         require(['text!./example/' + example + '.txt'], function(text) {
@@ -20,30 +27,36 @@ define(['lib/parser', 'lib/util/urlparams', 'lib/h', 'lib/renderer/colorscheme',
     }
 
     function render() {
-        require(['lib/layout/' + renderer.value, 'lib/renderer/svg'], function(layouter, rendererSvg) {
-            let parsed = parser.parse(textarea.value);
-            let layouted = layouter(parsed);
-            let svgPages = rendererSvg(layouted, colorRepo.resolver(colorscheme.value));
+        let layouter = layouters[renderer.value];
+        let parsed = parser.parse(textarea.value);
+        let layouted = layouter(parsed);
+        let svgPages = rendererSvg(layouted, colorRepo.resolver(colorscheme.value));
 
-            let html = h('div', { 'class': 'page-container' });
-            for (let page of svgPages) {
-                page.style.height = '50em';
-                page.style.width = layouted.pagewidth / layouted.pageheight * 50 + 'em';
-                page.style.margin = '1em';
-                page.style.float = 'left';
+        let html = h('div', { 'class': 'page-container' });
+        for (let page of svgPages) {
+            page.style.height = '50em';
+            page.style.width = layouted.pagewidth / layouted.pageheight * 50 + 'em';
+            page.style.margin = '1em';
+            page.style.float = 'left';
 
-                html.appendChild(page);
-            }
+            html.appendChild(page);
+        }
 
-            output.replaceChild(html.toDomNode(), output.firstChild);
-        });
+        output.replaceChild(html.toDomNode(), output.firstChild);
     }
 
     function pptx() {
-        require(['lib/layout/' + renderer.value, 'lib/output/pptx'],
-                    function(layouter, pptx) {
+        let layouter = layouters[renderer.value];
+        require(['lib/output/pptx'],  function(pptx) {
             pptx(parser.parse(textarea.value), layouter, colorRepo.resolver(colorscheme.value));
         });
+    }
+
+    function present() {
+        let layouter = layouters[renderer.value];
+        output_present(parser.parse(textarea.value),
+                       layouter,
+                       colorRepo.resolver(colorscheme.value));
     }
 
     function print() {
@@ -78,6 +91,7 @@ define(['lib/parser', 'lib/util/urlparams', 'lib/h', 'lib/renderer/colorscheme',
     renderer.addEventListener('input', render);
     colorscheme.addEventListener('input', render);
     document.querySelector('#export').addEventListener('change', exportHandler);
+    document.querySelector('#presentbtn').addEventListener('click', present);
     document.querySelector('#zoominbtn').addEventListener('click', () => zoom(0.1));
     document.querySelector('#zoomoutbtn').addEventListener('click', () => zoom(-0.1));
 
