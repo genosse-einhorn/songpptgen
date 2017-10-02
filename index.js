@@ -39,79 +39,21 @@ define(['lib/parser', 'lib/util/urlparams', 'lib/h', 'lib/renderer/colorscheme',
         });
     }
 
-    function fixFilename(unsafe) {
-        unsafe = '' + unsafe;
-        if (unsafe.length < 1)
-            return '_unknown_';
-
-        // very conservative attempt at sanitizing a file name
-        return unsafe.split('').map(c => {
-            let u = c.charCodeAt(0);
-            if (u <= 31)
-                return ' ';
-            if ('<>:"\'/\\|?*'.indexOf(c) != -1)
-                return '_';
-
-            return c;
-        }).join('');
-    }
-
     function pptx() {
-        require(['lib/layout/' + renderer.value, 'lib/renderer/powerpoint', '3rdparty/FileSaver'], function(layouter, renderer, saveAs) {
-            let song = parser.parse(textarea.value);
-            renderer(layouter(song), colorRepo.resolver(colorscheme.value))
-            .generateAsync({type: 'blob'})
-            .then(function(content) { window.saveAs(content, fixFilename(song.title) + '.pptx') });
+        require(['lib/layout/' + renderer.value, 'lib/output/pptx'],
+                    function(layouter, pptx) {
+            pptx(parser.parse(textarea.value), layouter, colorRepo.resolver(colorscheme.value));
         });
     }
 
     function print() {
-        require(['lib/layout/' + renderer.value, 'lib/renderer/svg', 'lib/renderer/colorscheme'],
-                    function(layouter, renderer, color_repo) {
+        // create window right here to work around popup blocker
+        let win = window.open('about:blank');
+
+        require(['lib/layout/' + renderer.value, 'lib/output/print'],
+                    function(layouter, print) {
             let song = parser.parse(textarea.value);
-            let layout = layouter(song);
-
-            let csswidth = layout.pagewidth + 'pt';
-            let cssheight = layout.pageheight + 'pt';
-
-            let win = window.open('about:blank');
-            win.document.write('<title>' + song.title + '</title>');
-            win.document.write('<style>'
-                  + '@page { '
-                  +     'size: ' + csswidth + ' ' + cssheight + ';'
-                  +     'margin: 0;'
-                  + '}'
-                  + '@media screen {'
-                  +     '.page {'
-                  +         'margin: 1em;'
-                  +     '}'
-                  +     'body {'
-                  +         'background-color: gray'
-                  +     '}'
-                  + '}'
-                  + '@media print {'
-                  +     'html, body {'
-                  +         'margin: 0;'
-                  +         'padding: 0;'
-                  +         'width: ' + csswidth + ';'
-                  +         'height: ' + cssheight + ';'
-                  +     '}'
-                  + '}'
-
-              + '</style>');
-
-            win.document.write('<div class="pagewrapper">');
-
-            for (let pspec of layout.pages) {
-                let svgpage = renderer.renderPage(pspec, layout.pagewidth, layout.pageheight, colorRepo.resolver(colorscheme.value));
-                svgpage.style.width = csswidth;
-                svgpage.style.height = cssheight;
-
-                win.document.write(svgpage.toXml());
-            }
-
-            win.print();
-            win.close();
+            print(song, layouter, colorRepo.resolver(colorscheme.value), win);
         });
     }
 
