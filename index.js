@@ -4,8 +4,8 @@ require.config({
         'domReady': '3rdparty/require_domReady'
     }
 });
-define(['lib/parser', 'lib/renderer/svg', 'lib/util/urlparams', 'lib/h', 'domReady!'],
-       function(parser, rendererSvg, urlparams, h) {
+define(['lib/parser', 'lib/util/urlparams', 'lib/h', 'lib/renderer/colorscheme', 'domReady!'],
+       function(parser, urlparams, h, colorRepo) {
     let textarea = document.querySelector('#input .editor');
     let renderer = document.querySelector('#renderer');
     let colorscheme = document.querySelector('#colorscheme');
@@ -19,10 +19,10 @@ define(['lib/parser', 'lib/renderer/svg', 'lib/util/urlparams', 'lib/h', 'domRea
     }
 
     function render() {
-        require(['lib/layout/' + renderer.value], function(layouter) {
+        require(['lib/layout/' + renderer.value, 'lib/renderer/svg'], function(layouter, rendererSvg) {
             let parsed = parser.parse(textarea.value);
             let layouted = layouter(parsed);
-            let svgPages = rendererSvg(layouted, colorscheme.value);
+            let svgPages = rendererSvg(layouted, colorRepo.resolver(colorscheme.value));
 
             let html = h('div', { 'class': 'page-container' });
             for (let page of svgPages) {
@@ -58,8 +58,9 @@ define(['lib/parser', 'lib/renderer/svg', 'lib/util/urlparams', 'lib/h', 'domRea
     function pptx() {
         require(['lib/layout/' + renderer.value, 'lib/renderer/powerpoint', '3rdparty/FileSaver'], function(layouter, renderer, saveAs) {
             let song = parser.parse(textarea.value);
-            renderer(layouter(song), colorscheme.value)
-            .generateAsync({type: 'blob'}).then(function(content) { window.saveAs(content, fixFilename(song.title) + '.pptx') });
+            renderer(layouter(song), colorRepo.resolver(colorscheme.value))
+            .generateAsync({type: 'blob'})
+            .then(function(content) { window.saveAs(content, fixFilename(song.title) + '.pptx') });
         });
     }
 
@@ -101,7 +102,7 @@ define(['lib/parser', 'lib/renderer/svg', 'lib/util/urlparams', 'lib/h', 'domRea
             win.document.write('<div class="pagewrapper">');
 
             for (let pspec of layout.pages) {
-                let svgpage = renderer.renderPage(pspec, layout.pagewidth, layout.pageheight, colorscheme.value);
+                let svgpage = renderer.renderPage(pspec, layout.pagewidth, layout.pageheight, colorRepo.resolver(colorscheme.value));
                 svgpage.style.width = csswidth;
                 svgpage.style.height = cssheight;
 
