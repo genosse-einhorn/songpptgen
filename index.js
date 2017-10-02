@@ -49,6 +49,67 @@ define(['lib/parser', 'lib/renderer/svg', 'lib/util/urlparams', 'domReady!'],
         });
     }
 
+    function print() {
+        require(['lib/layout/' + renderer.value, 'lib/renderer/svg', 'lib/renderer/colorscheme'],
+                    function(layouter, renderer, color_repo) {
+            let song = parser.parse(textarea.value);
+            let layout = layouter(song);
+
+            let csswidth = layout.pagewidth/100 + 'in';
+            let cssheight = layout.pageheight/100 + 'in';
+
+            let win = window.open('about:blank');
+            win.document.write('<title>' + song.title + '</title>');
+            win.document.write('<style>'
+                  + '@page { '
+                  +     'size: ' + csswidth + ' ' + cssheight + ';'
+                  +     'margin: 0;'
+                  + '}'
+                  + '@media screen {'
+                  +     '.page {'
+                  +         'margin: 1em;'
+                  +     '}'
+                  +     'body {'
+                  +         'background-color: gray'
+                  +     '}'
+                  + '}'
+                  + '@media print {'
+                  +     'html, body {'
+                  +         'margin: 0;'
+                  +         'padding: 0;'
+                  +         'width: ' + csswidth + ';'
+                  +         'height: ' + cssheight + ';'
+                  +     '}'
+                  + '}'
+
+              + '</style>');
+
+            win.document.write('<div class="pagewrapper">');
+
+            for (let pspec of layout.pages) {
+                let svgpage = renderer.renderPage(pspec, layout.pagewidth, layout.pageheight, colorscheme.value);
+                svgpage.style.width = csswidth;
+                svgpage.style.height = cssheight;
+
+                win.document.write(svgpage.toXml());
+            }
+
+            win.print();
+            //win.close();
+        });
+    }
+
+    function exportHandler() {
+        let m = document.querySelector('#export').value;
+
+        if (m == 'pptx')
+            pptx();
+        if (m == 'print')
+            print();
+
+        document.querySelector('#export').value = 'SELECT';
+    }
+
     function zoom(diff) {
         let f = output.style.fontSize ? parseFloat(output.style.fontSize.replace('rem', '')) : 1;
         f = Math.max(0.6, Math.min(100, f + diff));
@@ -58,7 +119,7 @@ define(['lib/parser', 'lib/renderer/svg', 'lib/util/urlparams', 'domReady!'],
     textarea.addEventListener('input', render);
     renderer.addEventListener('input', render);
     colorscheme.addEventListener('input', render);
-    document.querySelector('#pptxbutton').addEventListener('click', pptx);
+    document.querySelector('#export').addEventListener('change', exportHandler);
     document.querySelector('#zoominbtn').addEventListener('click', () => zoom(0.1));
     document.querySelector('#zoomoutbtn').addEventListener('click', () => zoom(-0.1));
 
