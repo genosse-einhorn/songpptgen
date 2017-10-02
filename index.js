@@ -4,8 +4,8 @@ require.config({
         'domReady': '3rdparty/require_domReady'
     }
 });
-define(['lib/parser', 'lib/renderer/svg', 'lib/util/urlparams', 'domReady!'],
-       function(parser, renderer_html, urlparams) {
+define(['lib/parser', 'lib/renderer/svg', 'lib/util/urlparams', 'lib/h', 'domReady!'],
+       function(parser, rendererSvg, urlparams, h) {
     let textarea = document.querySelector('#input .editor');
     let renderer = document.querySelector('#renderer');
     let colorscheme = document.querySelector('#colorscheme');
@@ -20,7 +20,21 @@ define(['lib/parser', 'lib/renderer/svg', 'lib/util/urlparams', 'domReady!'],
 
     function render() {
         require(['lib/layout/' + renderer.value], function(layouter) {
-            output.replaceChild(renderer_html(layouter(parser.parse(textarea.value)), colorscheme.value), output.firstChild);
+            let parsed = parser.parse(textarea.value);
+            let layouted = layouter(parsed);
+            let svgPages = rendererSvg(layouted, colorscheme.value);
+
+            let html = h('div', { 'class': 'page-container' });
+            for (let page of svgPages) {
+                page.style.height = '50em';
+                page.style.width = layouted.pagewidth / layouted.pageheight * 50 + 'em';
+                page.style.margin = '1em';
+                page.style.float = 'left';
+
+                html.appendChild(page);
+            }
+
+            output.replaceChild(html.toDomNode(), output.firstChild);
         });
     }
 
