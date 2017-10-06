@@ -1,5 +1,7 @@
 // run with mocha
 
+'use strict';
+
 const assert = require('assert');
 const fs = require('fs');
 const parser = require('../lib/parser');
