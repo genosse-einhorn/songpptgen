@@ -6,9 +6,9 @@ require.config({
 });
 define(['lib/parser', 'lib/util/urlparams', 'lib/h', 'lib/renderer/colorscheme',
         '3rdparty/split', 'lib/output/present', 'lib/layout/classic', 'lib/layout/kuemmel',
-        'lib/renderer/svg', 'domReady!'],
+        'lib/layout/kuemmel-arial', 'lib/renderer/svg', 'domReady!'],
        function(parser, urlparams, h, colorRepo, Split, output_present,
-                layout_classic, layout_kuemmel, rendererSvg) {
+                layout_classic, layout_kuemmel, layout_arial, rendererSvg) {
     let textarea = document.querySelector('#input .editor');
     let renderer = document.querySelector('#renderer');
     let colorscheme = document.querySelector('#colorscheme');
@@ -16,7 +16,8 @@ define(['lib/parser', 'lib/util/urlparams', 'lib/h', 'lib/renderer/colorscheme',
 
     let layouters = {
         'classic': layout_classic,
-        'kuemmel': layout_kuemmel
+        'kuemmel': layout_kuemmel,
+        'kuemmel-arial': layout_arial
     };
 
     function loadExample(example) {
